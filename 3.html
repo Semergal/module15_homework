@@ -1,0 +1,45 @@
+<!--
+Задание 3.
+
+Сверстайте кнопку, клик на которую будет выводить на экран следующие данные:
+
+Размеры экрана пользователя (ширина и высота).
+Координаты местонахождения пользователя. 
+Если пользователь отказался дать доступ к местоположению или данная функция недоступна в бразуере, вывести вместо координат сообщение «Информация о местоположении недоступна».
+
+!-->
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <body>
+        <button id="btn">Получить данные</button>
+        <div id="output"></div>
+    </body><br>
+    <a href="index.html">На главную</a>
+    <script>
+        btn.addEventListener("click", () => {
+            const scrX = window.screen.width;
+            const scrY = window.screen.height;
+            let cords;
+
+            const out = () => {
+                const out = `<p>Размер экрана: ${scrX}x${scrY}</p>
+                            <p>${cords}</p>`
+                output.innerHTML = out;
+            }
+
+            const success = (pos) => {
+                cords = `${pos.coords.latitude}° ${pos.coords.longitude}°`;
+                out();
+            }
+            const error = () =>{
+                cords = "Информация о местоположении недоступна";
+                out();
+                }
+
+
+            if(!navigator.geolocation) error();
+            else navigator.geolocation.getCurrentPosition(success, error);
+        });
+    </script>
+</html>
